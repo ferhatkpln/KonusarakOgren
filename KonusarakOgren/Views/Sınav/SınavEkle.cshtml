@@ -1,0 +1,88 @@
+﻿@using KonusarakOgren.ViewModels
+@model SınavViewModel
+
+@{
+    ViewData["Title"] = "Sınav Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sınav Ekle</h1>
+
+<div style="margin-top:50px;" class="addExam">
+
+
+    @if (ViewBag.ErrorMessage == null)
+    {
+        <form asp-action="SınavEkle" asp-controller="Sınav" method="post">
+            <div class="form-group">
+                <label for="selectedText">Yazı</label>
+                <select class="form-control" asp-for="Sınav.Baslık">
+                    <option value="-1">Sınav için yazı seçiniz</option>
+                    @if (Model.TextViewModels != null)
+                    {
+                        foreach (var textModel in Model.TextViewModels)
+                        {
+                            <option data-id="@(textModel.Id)"  value="@(textModel.Baslık)">@(textModel.Baslık)</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <textarea class="form-control"  asp-for="Sınav.İcerik" rows="6"></textarea>
+            </div>
+            @for (int i = 0; i < 4; i++)
+            {
+                <div class="form-group question">
+                    <div class="form-group">
+
+                        <input class="form-control" asp-for="Sınav.Sorulars[i].Soru" placeholder="Soru @(i+1)">
+                        <input type="hidden" asp-for="Sınav.Sorulars[i].SoruNo" value="@(i+1)" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input asp-for="Sınav.Sorulars[i].CevapA" placeholder="A) " class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input asp-for="Sınav.Sorulars[i].CevapB" placeholder="B) " class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input asp-for="Sınav.Sorulars[i].CevapC" placeholder="C) " class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input asp-for="Sınav.Sorulars[i].CevapD" placeholder="D) " class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mx-auto">
+                            <select class="form-control" asp-for="Sınav.Sorulars[i].DoğruCevap">
+                                <option value="-1">Doğru Cevap Seç</option>
+                                <option value="A">Cevap A</option>
+                                <option value="B">Cevap B</option>
+                                <option value="C">Cevap C</option>
+                                <option value="D">Cevap D</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <button id="btnCreateExam" type="submit" class="btn btn-primary btn-lg btn-block col-5 mx-auto">SINAV OLUŞTUR</button>
+        </form>
+    }
+    else
+    {
+        <div class="jumbotron">
+            <h1 class="display-4">Kayıt işlemi yapılamadı!</h1>
+            <p class="lead">@ViewBag.ErrorMessage</p>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <a class="btn btn-primary btn-lg" asp-action="SınavEkle" asp-controller="Sınav" role="button">Tekrar Sınav Oluştur</a>
+        </div>
+    }
+</div>
+

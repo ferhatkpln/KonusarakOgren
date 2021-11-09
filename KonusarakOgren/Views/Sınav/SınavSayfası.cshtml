@@ -1,0 +1,86 @@
+﻿@using KonusarakOgren.Models
+@model Sınav
+@{
+    ViewData["Title"] = "Sınav Sayfası";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-top: 20px;" class="exam mx-auto">
+    @if (Model != null)
+    {
+
+        <input type="hidden" id="examId" value="@(Model.SınavID)" />
+        <h1 style="text-align:center">@Model.Baslık</h1>
+        <p style="text-align:center;margin-top:10px;">@Model.İcerik</p>
+
+        @for (int i = 0; i < Model.Sorulars.Count; i++)
+        {
+            <div class="row" style="margin-top:7vh;">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 question" style="margin-top: 1px;">
+                    <h4><b>@(Model.Sorulars[i].SoruNo))</b> @Model.Sorulars[i].Soru</h4>
+                    <div id="listGroup@(Model.Sorulars[i].SoruNo)" class="list-group">
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="A"
+                           data-id="@(Model.Sorulars[i].SoruNo)">
+                            <b>A)</b> @Model.Sorulars[i].CevapA
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="B"
+                           data-id="@(Model.Sorulars[i].SoruNo)">
+                            <b>B)</b> @Model.Sorulars[i].CevapB
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="C"
+                           data-id="@(Model.Sorulars[i].SoruNo)">
+                            <b>C)</b> @Model.Sorulars[i].CevapC
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="D"
+                           data-id="@(Model.Sorulars[i].SoruNo)">
+                            <b>D)</b> @Model.Sorulars[i].CevapD
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 question">
+                    <h4><b>@(Model.Sorulars[i + 1].SoruNo))</b> @Model.Sorulars[i + 1].Soru</h4>
+                    <div id="listGroup@(Model.Sorulars[i+1].SoruNo)" class="list-group">
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="A"
+                           data-id="@(Model.Sorulars[i+1].SoruNo)">
+                            <b>A)</b> @Model.Sorulars[i + 1].CevapA
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="B"
+                           data-id="@(Model.Sorulars[i+1].SoruNo)">
+                            <b>B)</b> @Model.Sorulars[i + 1].CevapB
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="C"
+                           data-id="@(Model.Sorulars[i+1].SoruNo)">
+                            <b>C)</b> @Model.Sorulars[i + 1].CevapC
+                        </a>
+
+                        <a class="list-group-item list-group-item-action" style="cursor: pointer;"
+                           data-answer="D"
+                           data-id="@(Model.Sorulars[i+1].SoruNo)">
+                            <b>D)</b> @Model.Sorulars[i + 1].CevapD
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" value="@(i++)" />
+        }
+
+        <div class="form-row">
+            <div class="form-group col-md-4 mx-auto">
+                <input type="button" class="btn btn-success col-12 btn-lg mx-auto" style="margin-top:20px; margin-bottom:20px;" id="btnExamControl" value="Sınavı Tamamla" />
+            </div>
+        </div>
+    }
+</div>
